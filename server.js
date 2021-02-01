@@ -12,7 +12,8 @@ const session = require('express-session');
 const initializePassport = require('./passport-config');
 initializePassport(
     passport,
-    email => users.find(user => user.email === email)
+    email => users.find(user => user.email === email),
+    id => users.find(user => user.id === id)
 )
 
 const users = []
@@ -29,7 +30,7 @@ app.use(passport.initialize())
 app.use(passport.session())
 
 app.get('/', (req, res) => {
-    res.render('index.ejs', { name: 'kale'})
+    res.render('index.ejs', { name: req.user.name })
 })
 
 app.get('/login', (req, res) => {
@@ -59,6 +60,7 @@ app.post('/register', async (req, res) => {
     } catch {
         res.redirect('/register')
     }
+    console.log(users);
 })
 
 app.listen(3000)
