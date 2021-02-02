@@ -19,6 +19,7 @@ initializePassport(
 
 const users = []
 
+app.use('/css', express.static(__dirname + `/css`));
 app.set('view-engine', 'ejs')
 app.use(express.urlencoded({ extended: false }))
 app.use(flash())
